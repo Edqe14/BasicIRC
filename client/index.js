@@ -121,7 +121,7 @@ const main = async() => {
 							'yellow',
 							'blue',
 							'red',
-							'magneta'
+							'magenta'
 						];
 						
 						let color = colors[Math.floor(Math.random() * colors.length)];
