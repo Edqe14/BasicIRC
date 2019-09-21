@@ -77,7 +77,7 @@ const main = async() => {
                 })
         
                 socket.on('connect', () => {
-                    console.log('\033[2J');
+                    process.stdout.write('\033[2J\u001B[0;0f');
                     status.stop();
 
                     console.log(chalk.underline.yellow('Connected to the server.'));
@@ -106,7 +106,7 @@ const main = async() => {
                         }]);
 
                         await socket.emit('joinRoom', joinRoom);
-                        await console.log('\033[2J');
+                        await process.stdout.write('\033[2J\u001B[0;0f');
                         await console.log(`${chalk.yellow('[System]')} You joined the room`);
                     });
 
