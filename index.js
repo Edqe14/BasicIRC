@@ -15,14 +15,7 @@ console.log(chalk.yellow('IRC Console by Edqe') + chalk.white(' | ') + chalk.gre
 
 let disabled = false;
 
-let rooms = {
-    General: {
-        users: []
-    },
-    Playground: {
-        users: []
-    }
-};
+let rooms = config.rooms;
 
 let globalUser = {};
 let admin = {
