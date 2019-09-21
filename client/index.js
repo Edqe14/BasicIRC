@@ -31,7 +31,7 @@ const main = async() => {
         const get = util.promisify(prompt.get);
 
         const { address } = await get([{
-            description: chalk.white('Enter the server address (IP/Domain/localhost)'),
+            description: chalk.white('Enter the server address'),
             name: 'address',
             default: 'localhost',
             required: true,
