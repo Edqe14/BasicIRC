@@ -22,14 +22,14 @@ npm i
 ```
 Then, run the server/client:
 
-Server
+#### Server
 ```js
 npm start
 or
 node index.js
 ```
 
-Client
+#### Client
 ```js
 npm test
 or
