@@ -4,8 +4,8 @@
   "description": "Basic IRC with NodeJS, Socket.IO and HTTP Server",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon client/index.js",
-    "start": "nodemon index.js"
+    "test": "node client/index.js",
+    "start": "node index.js"
   },
   "author": "Edqe",
   "license": "MIT",
@@ -14,10 +14,6 @@
     "express": "^4.17.1",
     "ora": "^3.4.0",
     "prompt": "^1.0.0",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.2"
+    "socket.io": "^2.2.0"
   }
 }
