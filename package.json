@@ -1,7 +1,7 @@
 {
-  "name": "basicirc",
+  "name": "basicirc-server",
   "version": "1.0.0",
-  "description": "Basic IRC with NodeJS, Socket.IO and HTTP Server",
+  "description": "Basic IRC server with NodeJS, Socket.IO and HTTP Server",
   "main": "index.js",
   "scripts": {
     "test": "node client/index.js",
