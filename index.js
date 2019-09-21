@@ -186,12 +186,12 @@ setTimeout(() => {
 
                     case `${prefix}exit`:
                         let disabling = ora({
-							text: 'Disabling all modules...',
-							spinner: {
-								frames: ['-', '\\', '|', '/'],
-								interval: 100
-							}
-						}).start();
+			    text: 'Disabling all modules...',
+			    spinner: {
+				frames: ['-', '\\', '|', '/'],
+				interval: 100
+			    }
+			}).start();
                         setTimeout(async() => {
 							await disabling.stop();
                             await console.log('Server Stopped.')
