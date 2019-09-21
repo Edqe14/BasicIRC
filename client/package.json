@@ -1,9 +1,19 @@
 {
-  "name": "irc-client",
+  "name": "basicirc-client",
   "version": "1.0.0",
   "description": "BasicIRC Client",
   "main": "index.js",
-  "bin": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "express": "^4.17.1",
+    "ora": "^3.4.0",
+    "prompt": "^1.0.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  },
   "author": "Edqe",
   "license": "MIT"
 }
