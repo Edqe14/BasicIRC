@@ -7,6 +7,9 @@ const io = require('socket.io')(server);
 const chalk = require('chalk');
 const readline = require('readline');
 const ora = require('ora');
+const fs = require('fs');
+
+let config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 
 console.log(chalk.yellow('IRC Console by Edqe') + chalk.white(' | ') + chalk.green('Version 1.0.0'));
 
@@ -144,9 +147,9 @@ setTimeout(() => {
         setTimeout(async() => {
             await loadingEvents.stop();
 
-            await server.listen(3000, async e => {
+            await server.listen(config.port, async e => {
                 if(e) console.log(e);
-                await console.log('Listening to port: 3000\n');
+                await console.log(`Listening to port: ${config.port}\n`);
                 await console.log('Type /? to show all commands.');
             });
 
@@ -186,12 +189,12 @@ setTimeout(() => {
 
                     case `${prefix}exit`:
                         let disabling = ora({
-			    text: 'Disabling all modules...',
-			    spinner: {
-				frames: ['-', '\\', '|', '/'],
-				interval: 100
-			    }
-			}).start();
+                            text: 'Disabling all modules...',
+                            spinner: {
+                                frames: ['-', '\\', '|', '/'],
+                                interval: 100
+                            }
+                        }).start();
                         setTimeout(async() => {
 							await disabling.stop();
                             await console.log('Server Stopped.')
