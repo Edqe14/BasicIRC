@@ -124,7 +124,7 @@ const main = async() => {
 							'magneta'
 						];
 						
-						let color = colors[Math.floor(Math.random() * colors.length-1)];
+						let color = colors[Math.floor(Math.random() * colors.length)];
                         input.setPrompt(chalk.dim.bold.underline[color](name)+chalk.white(' » '));
                         input.prompt();
 
