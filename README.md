@@ -28,7 +28,7 @@ node client/index.js
 
 *Right now, there isn't any config.json but sooner or later, it will be added.*
 
-Port (index.js)
+Port (index.js <line: 147>)
 ```js
 server.listen(port, ...);
 ```
