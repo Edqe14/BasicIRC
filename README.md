@@ -2,17 +2,17 @@
 
 An basic CLI based IRC Server & Client built with Node, Express and Socket.io
 
-Features:  
+__Features:__  
 > Server and Client have their own commands  
 > Interactive client  
 > Rooms support  
 > Random user color  
 > Real-time messaging system  
 
-To be added/fixed:  
-+ Message history (Saving messages into a database) a.k.a Database support  
-+ More commands  
-- Fix clearing text in the CLI
+__To be added/fixed:__  
+> Message history (Saving messages into a database) a.k.a Database support  
+> More commands  
+> Fix clearing text in the CLI
 
 ## Installation
 
