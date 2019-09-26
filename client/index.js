@@ -174,6 +174,7 @@ const main = async() => {
                             if(msg.name !== name) {
                                 let color = msg.color;
                                 let decMsg = Buffer.from(msg.message, 'base64').toString('ascii');
+                                await console.log(`${chalk.dim.bold[color](msg.name)} » ${decMsg}`);
                             };
 							await input.prompt();
                         });
