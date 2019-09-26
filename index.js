@@ -53,8 +53,9 @@ io.on('connection', (socket) => {
             socket.on('sendMessage', async msg => {
                 let prefix = '/';
                 let message = msg.message;
-                let command = message.split(' ')[0]
-                let args = message.split(' ').shift()
+                let command = message.split(' ')[0];
+                let args = message.split(' ').shift();
+                let decMsg = Buffer.from(message, 'base64').toString('ascii');
 
                 let help = [
                     '############- Help -############',
@@ -68,14 +69,14 @@ io.on('connection', (socket) => {
 
                 //Call command
                 if(message.startsWith(prefix)) {
-                    if(command == `${prefix}?` || command == `${prefix}help`) {
+                    if(decMsg == `${prefix}?` || decMsg == `${prefix}help`) {
                         await socket.emit('command', help, 'array')
-                    } else if(command == `${prefix}room`) {
+                    } else if(decMsg == `${prefix}room`) {
                         await socket.emit('command', [
                             `» ${chalk.underline.yellow('Room » '+Object.keys(rooms)[r])}`,
                             `» Users:`
                         ], 'arrayRoom', rooms[Object.keys(rooms)[r]]['users']);
-                    } else if(command == `${prefix}disconnect` || command == `${prefix}dc`) {
+                    } else if(decMsg == `${prefix}disconnect` || decMsg == `${prefix}dc`) {
                         await socket.emit('command', 'Successfuly Disconnected from the server.', 'string');
                         await socket.disconnect(true);
                     } else {

@@ -132,10 +132,11 @@ const main = async() => {
 							if(text == '/exit' || text == '/stop') return process.exit(1);
 							await input.prompt();
                             if(text == '') return;
+                            let text64 = Buffer.from(text).toString('base64');
                             await socket.emit('sendMessage', {
                                 name: rData.name,
                                 room: rData.room,
-                                message: text,
+                                message: text64,
 								color: color
                             });
                         });
@@ -171,8 +172,8 @@ const main = async() => {
 							};
 							
                             if(msg.name !== name) {
-								let color = msg.color;
-                                await console.log(`${chalk.dim.bold[color](msg.name)} » ${msg.message}`);
+                                let color = msg.color;
+                                let decMsg = Buffer.from(msg.message, 'base64').toString('ascii');
                             };
 							await input.prompt();
                         });
