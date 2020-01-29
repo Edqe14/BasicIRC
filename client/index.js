@@ -4,6 +4,7 @@ const io = require('socket.io-client');
 const chalk = require('chalk');
 const ora = require('ora');
 const readline = require('readline');
+const moment = require('moment');
 
 async function connect(address, port) {
     try {
@@ -35,8 +36,8 @@ const main = async() => {
             name: 'address',
             default: 'localhost',
             required: true,
-            pattern: /^(((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|localhost|(?:[a-z0-9](?:[a-z0-9]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9])/g,
-            message: chalk.red('Address must be an IP/Domain/localhost')
+            //pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm,
+            message: chalk.red('Address must be an filled-in')
         }])
 
         const { port } = await get([{
@@ -73,7 +74,7 @@ const main = async() => {
                 socket.on('connect_timeout', () => {
                     status.stop();
                     //this.primaryServer = undefined;
-                    return console.error(chalk.red('Connection error!'));
+                    return console.error(chalk.red('Connection timed-out!'));
                 })
         
                 socket.on('connect', () => {
@@ -107,7 +108,7 @@ const main = async() => {
 
                         await socket.emit('joinRoom', joinRoom);
                         await process.stdout.write('\033[2J\u001B[0;0f');
-                        await console.log(`${chalk.yellow('[System]')} You joined the room`);
+                        await console.log(`${chalk.bold.yellow('[System]')} You joined the room`);
                     });
 
                     socket.on('joinedRoom', rData => {
@@ -132,11 +133,11 @@ const main = async() => {
 							if(text == '/exit' || text == '/stop') return process.exit(1);
 							await input.prompt();
                             if(text == '') return;
-                            let text64 = Buffer.from(text).toString('base64');
+                            let text16 = Buffer.from(text).toString('hex');
                             await socket.emit('sendMessage', {
                                 name: rData.name,
                                 room: rData.room,
-                                message: text64,
+                                message: text16,
 								color: color
                             });
                         });
@@ -149,7 +150,8 @@ const main = async() => {
 								input._refreshLine();
 							};
 							
-							console.log(`${chalk.yellow('[System]')} ${name} joined the room.`);
+                            console.log(`${chalk.bold.yellow('[System]')} ${name} joined the room.`);
+                            input.prompt();
 						});
 
 						socket.on('userDisconnect', name => {
@@ -157,10 +159,11 @@ const main = async() => {
 							console.log = function() {
 								input.output.write('\x1b[2K\r');
 								log.apply(console, Array.prototype.slice.call(arguments));
-								input._refreshLine
+								input._refreshLine();
 							};
 							
-							console.log(`${chalk.yellow('[System]')} ${name} disconnected.`);
+                            console.log(`${chalk.bold.yellow('[System]')} ${name} disconnected.`);
+                            input.prompt();
 						});
                         
                         socket.on('message', async msg => {
@@ -173,8 +176,10 @@ const main = async() => {
 							
                             if(msg.name !== name) {
                                 let color = msg.color;
-                                let decMsg = Buffer.from(msg.message, 'base64').toString('ascii');
-                                await console.log(`${chalk.dim.bold[color](msg.name)} » ${decMsg}`);
+                                let decMsg = Buffer.from(msg.message, 'hex').toString('utf8');
+                                let date = msg.time;
+                                let formated = moment(date).format('MM/HH/YYYY hh:mm');
+                                await console.log(`${chalk.dim.bold[color](msg.name)} ${chalk.dim.bold.gray(`(${formated})`)} » ${decMsg}`);
                             };
 							await input.prompt();
                         });
@@ -192,16 +197,19 @@ const main = async() => {
 							if(type == 'array') {
 								res.forEach(c => {
 									console.log(c);
-								});
+                                });
+                                input.prompt();
 							} else if(type == 'arrayRoom') {
 								//${rooms[Object.keys(rooms)[r]]['users'].splice(rooms[Object.keys(rooms)[r]]['users'].indexOf(username),1).join(', ')}
 								data.splice(data.indexOf(name), 1);
 								res[1] = `» Users: ${chalk.green(name)}, ${data.join(', ')}`
 								res.forEach(c => {
 									console.log(c);
-								});
+                                });
+                                input.prompt();
 							} else if(type == 'string') {
-								console.log(res);
+                                console.log(res);
+                                input.prompt();
 							};
 						});
 					});

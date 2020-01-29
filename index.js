@@ -7,9 +7,12 @@ const io = require('socket.io')(server);
 const chalk = require('chalk');
 const readline = require('readline');
 const ora = require('ora');
-const fs = require('fs');
 
-let config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+app.get('/', (req, res) => {
+  res.status(200).send({message: "Connect using BasicIRC"});
+});
+
+let config = require("./config.json");
 
 console.log(chalk.yellow('IRC Console by Edqe') + chalk.white(' | ') + chalk.green('Version 1.0.0'));
 
@@ -86,7 +89,8 @@ io.on('connection', (socket) => {
                     await socket.to(msg.room).broadcast.emit('message', {
                         name: msg.name,
                         message: message,
-						color: msg.color
+						            color: msg.color,
+                        time: new Date(Date.now())
                     });
                 };            
             });
@@ -190,7 +194,7 @@ setTimeout(() => {
                             }
                         }).start();
                         setTimeout(async() => {
-							await disabling.stop();
+							              await disabling.stop();
                             await console.log('Server Stopped.')
                             await process.exit(1)
                         }, Math.floor((Math.random() * (4500-2500))+2500));
@@ -216,7 +220,7 @@ setTimeout(() => {
             });
 
             input.on('close', () => {
-                return console.log('Server Stopped.');
+                return console.log('Input not supported');
             });
         }, Math.floor(Math.random() * 2500));
     }, Math.floor(Math.random() * 3500));
